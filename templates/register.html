@@ -1,18 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>zxc</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
+{% extends 'layout.html' %}
 
-    {% for f in form %}
-        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-<button type="submit">Регистрация</button>
-</form>
-</body>
-</html>
+{% block title %} Register {% endblock %}
+
+
+
+{% block msg %}
+{% if messages %}
+{% for mg in messages %}
+<div class="pt-5"></div>
+<div class="pt-5"></div>
+
+<div {% if mg.tags %} class="alert alert-{{mg.tags}} alert-danger fade show" role ="alert" {% endif %}><strong>{{mg}}</strong>
+  <button type="button" class="btn-danger" data-bs-dismiss="alert" aria-label="Close"> </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock msg %}
+
+
+
+
+{% block content %}
+
+<div class="col-12">
+    <h1 class="text-center text-white">
+    Регистрация
+  </h1>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="shadow col-lg-6 m-auto p-5 text-white bg-success-subtle rounded-4">
+        <p class="h4 py-3" >Создайте новый аккаунт.</p>
+
+        <form action="" method="POST" novalidate> {% csrf_token %}
+          {% for fm in form %}
+          <div class="form-group">
+            {{fm.label_tag}} {{fm}} <small class="text-warning-emphasis" >{{fm.errors|striptags}}</small>  <br><br>
+          </div>
+          {% endfor %}
+          <input type="submit" value="Зарегистрироваться" class="btn btn-warning rounded-5 w-100">
+
+          {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <p class="alert alert-danger my-3" >{{error}}</p>
+            {% endfor %}
+          {% endif %}
+
+        </form><br>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

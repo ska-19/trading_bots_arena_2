@@ -1,0 +1,105 @@
+body {
+    background: #2c2c2c;
+}
+
+aside {
+    float: left;
+    /*background: #18191a;*/
+    width: 19%;
+    padding: 2.5%;
+    height: 100%;
+    color: #f3f1f1;
+    border-right: 5px solid #fdb81e;
+    border-bottom: 5px solid #fdb81e;
+    background: linear-gradient(#18191a, #2c2c2c);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 21px;
+}
+
+aside img {
+    width: 80px;
+    float: left;
+}
+
+aside .logo {
+    color: #fdb81e;
+    font-size: 50px;
+    margin-left: 10px;
+    font-weight: bold;
+    position: relative;
+    top: 5px;
+}
+
+aside h3 {
+    color: #f3f1f1;
+    margin-top: 40px;
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    color: #f3f1f1;
+    display: block;
+    margin-top: 20px;
+    transition: transform .6s ease;
+}
+
+aside ul a {
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+}
+
+aside ul li:hover, ul a:hover {
+    color: #9c3fe9;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+
+/*зач?*/
+aside div {
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 25px;
+    float: end;
+}
+
+main .features {
+    float: left;
+    color: #f3f1f1;
+    margin-top: 100px;
+    text-align: center;
+    width: 75%;
+}
+
+main .features h1 {
+    font-size: 50px
+}
+
+main .features p {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.alert-warning {
+    border-color: #fdb81e;
+    background: #18191a;
+    color: #d7d7d7;
+    float: top;
+    clear: both;
+    width: 400px;
+    margin: 20px 34%;
+    text-align: center;
+}
+
+/*
+ПАЛИТРА
+#18191a
+#9c3fe9
+#ef68b2
+#fdb81e
+#f3f1f1
+*/
