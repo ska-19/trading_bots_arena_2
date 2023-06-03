@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+
+
+{% block msg %}  
+  {% if messages %}
+  {% for mg in messages %}
+  <div class="pt-5"></div>
+  <div class="pt-5"></div>
+
+  <div {% if mg.tags %} class="alert alert-{{mg.tags}} alert-dismissible fade show" role ="alert" {% endif %}><strong>{{mg}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+  </div>
+  {% endfor %}
+  {% endif %}
+{% endblock msg %}
+
+
+
+{% block content %}
+
+<div class="col-sm-9  my-5">
+  <h1 class="text-success Rounded my-5">
+    Home
+  </h1>
+
+  {% if all_blog %}
+
+  {% for blog in all_blog %}
+  <div class="jumbotron p-3 shadow border rounded-3 px-4 py-4">
+
+    <div class="">
+      <img class="rounded-circle img-fluid article-img" src="{{ blog.user.profile.image.url }}" alt="Author Profile">
+      <a class="mr-2 disabled-link" href="{% url 'profile' blog.user.id %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a>
+      <small class="text-muted"> &centerdot; {{ blog.create_at|date:"d F, Y" }}</small>
+      <a class="text-muted disabled-link" href="{% url 'category' blog.category %}"> &centerdot; {{ blog.category }}</a>
+
+    </div> <br>
+    <p><a class="disabled-link text-success h2" href="{% url 'blog' blog.id %}">{{ blog.title }}</a></p>
+    <p class="article-content p-s demo-1">{{blog.description}}</p>
+  </div><br>
+
+  {% endfor %}
+
+  {% else %}
+  <h4 class="text-center alert alert-warning"> No Records </h4>
+{% endif %}  
+
+
+
+{% endblock content %}

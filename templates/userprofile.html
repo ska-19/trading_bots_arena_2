@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block msg %}
+  {% if messages %}
+  {% for mg in messages %}
+  <div class="pt-5"></div>
+  <div class="pt-5"></div>
+
+  <div {% if mg.tags %} class="alert alert-{{mg.tags}} alert-dismissible fade show" role ="alert" {% endif %}><strong>{{mg}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+  </div>
+  {% endfor %}
+  {% endif %}
+{% endblock msg %}
+
+
+
+{% block content %}
+
+<div class="col-12">
+  <h1 class="text-center text-white">
+    Профиль
+  </h1>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="shadow col-lg-10 p-5 text-white rounded-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+{#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
+              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>
+              <p class="h5 px-3" >{{ user.username }} </p>
+
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-7">
+              <form action="" method="POST" enctype="multipart/form-data" novalidate> {% csrf_token %}
+                {% for i in p_form %}
+                {{i.label_tag}} {{i}} <small class="text-warning-emphasis" >{{i.errors|striptags}}</small>  <br><br>
+                {% endfor %}
+                {{i_form.as_p}}
+                <br><br>
+                <input type="submit" class="btn btn-warning rounded-5 w-100" value="Обновить">
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-sm-10  my-5">
+    <h1 class="text-white text-center my-5">
+      Все боты {{ user.first_name }}
+    </h1>
+
+    {% if user_blog %}
+
+    {% for blog in user_blog %}
+    <div class="jumbotron p-3 shadow border rounded-3 px-4 py-4">
+
+      <div class="">
+{#        <img class="rounded-circle img-fluid article-img text-white" src="{{ blog.user.profile.image.url }}" alt="Аватарка">#}
+        <a class="mr-2 disabled-link" href="{% url 'profile' blog.user.id %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a>
+        <small class="text-white"> &centerdot; {{ blog.create_at|date:"d F, Y" }}</small>
+      </div> <br>
+      <p><a class="disabled-link text-warning h2" href="">{{ blog.title }}</a></p>
+      <p class="text-white article-content p-s demo-1">{{blog.description}}</p>
+    </div><br>
+
+    {% endfor %}
+
+    {% else %}
+    <h4 class="text-white text-center my-5"> Пока нет ботов :c </h4>
+  {% endif %}
+  </div>
+
+</div>
+
+{% endblock content %}

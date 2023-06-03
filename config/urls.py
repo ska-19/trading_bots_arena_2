@@ -25,7 +25,8 @@ print(router.urls)  # вот тут хз че это такое, надо у г�
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('reg/', include('user_reg.urls')),
+    path('', include('main.urls')),
+    path('user/', include('user_reg.urls')),
     path('api/', include(router.urls)),
     path('add_bot/', include('bot_ui.urls'))
 ]
