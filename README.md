@@ -10,5 +10,5 @@ Project_23
 
 
 
-![2023-02-11.png](trading_bots_arena%2Fmain%2Fstatic%2Fimg%2F2023-02-11.png)
+![2023-02-11.png](trading_bots_arena%2Fstatic%2Fmain%2Fimg%2F2023-02-11.png)
 2023-02-11
