@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load django_template_maths %}
 
 
 {% block msg %}
@@ -19,14 +20,14 @@
 
 {% block content %}
 
-<div class="col-12">
+<div class="col-14">
   <h1 class="text-center text-white">
     Профиль
   </h1>
 
   <div class="container">
     <div class="row mt-5">
-      <div class="shadow col-lg-10 p-5 text-white rounded-4">
+      <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto">
         <div class="container">
           <div class="row">
             <div class="col-sm-4">
@@ -51,37 +52,48 @@
 
 
       </div>
+
     </div>
   </div>
 
 
 
-  <div class="col-sm-10  my-5">
-    <h1 class="text-white text-center my-5">
-      Все боты {{ user.first_name }}
-    </h1>
 
-    {% if user_blog %}
-
-    {% for blog in user_blog %}
-    <div class="jumbotron p-3 shadow border rounded-3 px-4 py-4">
-
-      <div class="">
-{#        <img class="rounded-circle img-fluid article-img text-white" src="{{ blog.user.profile.image.url }}" alt="Аватарка">#}
-        <a class="mr-2 disabled-link" href="{% url 'profile' blog.user.id %}">{{ blog.user.first_name }} {{ blog.user.last_name }}</a>
-        <small class="text-white"> &centerdot; {{ blog.create_at|date:"d F, Y" }}</small>
-      </div> <br>
-      <p><a class="disabled-link text-warning h2" href="">{{ blog.title }}</a></p>
-      <p class="text-white article-content p-s demo-1">{{blog.description}}</p>
-    </div><br>
+  <div class="container">
+    <div class="row mt-10">
+      <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
+      <table class="table table-dark">
+          <h1 class="text-white text-center my-5"> Все боты {{ user.username }} </h1>
+   {% if bots %}
+   <thead >
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Balance</th>
+      <th scope="col">PNL</th>
+    </tr>
+  </thead>
+    <tbody>
+    {% for bots_i in bots %}
+    <tr>
+      <th scope="row"> {{ forloop.counter }} </th>
+      <td>{{ bots_i.bot_name }}</td>
+        <td> Off </td>
+      <td>{{ bots_i.balance|add_decimal:2 }}</td>
+      <td>{{ bots_i.balance|percent_of_number:bots_i.base_balance|add_decimal:2|sub:100 }}% </td>
+    </tr>
+{#        <small class="text-white"> &centerdot; {{ bots_i.create_at|date:"d F, Y" }}</small>#}
 
     {% endfor %}
-
+  </tbody>
+</table>
     {% else %}
     <h4 class="text-white text-center my-5"> Пока нет ботов :c </h4>
   {% endif %}
   </div>
-
+    </div>
+  </div>
 </div>
 
 {% endblock content %}

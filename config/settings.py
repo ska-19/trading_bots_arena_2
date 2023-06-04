@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user_reg.apps.UserRegConfig',
     'bot.apps.BotConfig',
-    'bot_ui.apps.BotUiConfig'
+    'bot_ui.apps.BotUiConfig',
+'django_template_maths',
 ]
 
 MIDDLEWARE = [
