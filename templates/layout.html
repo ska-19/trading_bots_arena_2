@@ -24,8 +24,17 @@
             <li><i class="fa-solid fa-house"></i> Главная</li>
         </a>
         <a href="{% url 'home' %}">
-            <li><i class="fa-solid fa-newspaper"></i> Боты </li>
+            <li><i class="fa-solid fa-newspaper"></i> Глобальный рейтинг </li>
         </a>
+            <a href="{% url 'bots_list' %}">
+            <li><i class="fa-solid fa-newspaper"></i> Ваши боты </li>
+        </a>
+        {% if request.user.is_authenticated %}
+             <a href="{% url 'add_bot' %}">
+                <li><i class="fa-solid fa-newspaper"></i> Добавить бота </li>
+            </a>
+        {% else %}
+        {% endif %}
 {#        <a href="{% url 'about' %}">#}
 {#            <li><i class="fa-sharp fa-solid fa-user-ninja"></i> Про нас</li>#}
 {#        </a>#}

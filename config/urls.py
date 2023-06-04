@@ -28,5 +28,5 @@ urlpatterns = [
     path('', include('main.urls')),
     path('user/', include('user_reg.urls')),
     path('api/', include(router.urls)),
-    path('add_bot/', include('bot_ui.urls'))
+    path('bot/', include('bot_ui.urls'))
 ]

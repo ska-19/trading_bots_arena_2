@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %} Боты {% endblock %}
+
+{% block content %}
+<div class="features">
+    <h1> Ваши боты </h1>
+    {% for bots_i in bots%}
+    <div class="alert alert-warning">
+        <h3>{{ bots_i.bot_name }}</h3>
+        <p>{{ bots_i.balance }}</p>
+        <button class="btn btn-warning"> подробней</button>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
