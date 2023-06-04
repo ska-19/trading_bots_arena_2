@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth import logout
@@ -40,9 +41,20 @@ def profile(request, id):
 
 def user_profile(request, id):
     if request.user.is_authenticated:
-        user = User.objects.get(id=id)
-        bots = Bot.objects.filter(user_id=id)
-        return render(request, 'userprofile.html', context={'user': user, 'bots': bots})
+        if id == request.user.id:
+            context = {
+                'user': User.objects.get(id=id),
+                'bots':Bot.objects.filter(user_id=id),
+            }
+            return render(request, 'userprofile.html', context)
+        else:
+            context = {
+                'user': User.objects.get(pk=id),
+            }
+            # except ObjectDoesNotExist:
+            #     messages.warning(request, 'User Does Not Exist')
+            # return redirect('home')
+            return render(request, 'profile.html', context)
     else:
         return HttpResponseRedirect('/user/login/')
 
