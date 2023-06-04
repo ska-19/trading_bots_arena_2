@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
+from bot.models import Bot
 
 from .forms import *
 from .models import *
@@ -40,7 +41,8 @@ def profile(request, id):
 def user_profile(request, id):
     if request.user.is_authenticated:
         user = User.objects.get(id=id)
-        return render(request, 'userprofile.html', context={'user': user})
+        bots = Bot.objects.filter(user_id=id)
+        return render(request, 'userprofile.html', context={'user': user, 'bots': bots})
     else:
         return HttpResponseRedirect('/user/login/')
 
