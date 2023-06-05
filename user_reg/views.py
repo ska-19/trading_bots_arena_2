@@ -42,11 +42,24 @@ def profile(request, id):
 def user_profile(request, id):
     if request.user.is_authenticated:
         if id == request.user.id:
-            context = {
-                'user': User.objects.get(id=id),
-                'bots':Bot.objects.filter(user_id=id),
-            }
-            return render(request, 'userprofile.html', context)
+            if request.method == 'POST':
+                form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
+                if form.is_valid():
+                    form.save()
+                    # messages.success(request, 'Your profile was successfully updated!')
+                    return redirect('userprofile', id=id)
+                else:
+                    # form.add_error(None, 'error description')
+                    return render(request, 'userprofile.html', {'form': form})
+            else:
+                form = UpdateProfileForm(instance=request.user)
+                context = {
+                    'user': User.objects.get(id=id),
+                    'bots': Bot.objects.filter(user_id=id),
+                    'form': form,
+                }
+                return render(request, 'userprofile.html', context)
+
         else:
             context = {
                 'user': User.objects.get(pk=id),

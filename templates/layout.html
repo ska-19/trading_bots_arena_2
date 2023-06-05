@@ -27,11 +27,11 @@
             <li><i class="fa-solid fa-newspaper"></i> Глобальный рейтинг </li>
         </a>
             <a href="{% url 'bots_list' %}">
-            <li><i class="fa-solid fa-newspaper"></i> Ваши боты </li>
+            <li><i class="fa-solid fa-wallet"></i> Ваши боты </li>
         </a>
         {% if request.user.is_authenticated %}
              <a href="{% url 'add_bot' %}">
-                <li><i class="fa-solid fa-newspaper"></i> Добавить бота </li>
+                <li><i class="fa-solid fa-plus"></i> Добавить бота </li>
             </a>
         {% else %}
         {% endif %}
@@ -46,14 +46,14 @@
                 <li><i class="fa-sharp fa-solid fa-user"></i> Профиль</li>
             </a>
             <a href="{% url 'logout' %}">
-                <li><i class="fa-sharp fa-solid fa-user"></i> Выйти</li>
+                <li><i class="fa-solid fa-arrow-right-from-bracket"></i> Выйти</li>
             </a>
             {% else %}
             <a class="nav-link" href="{% url 'signup' %}">
-                <li><i class="fa-sharp fa-solid fa-user"></i> Регистрация</li>
+                <li><i class="fa-solid fa-user-plus"></i> Регистрация</li>
             </a>
             <a href="{% url 'login' %}">
-                <li><i class="fa-sharp fa-solid fa-user"></i> Войти</li>
+                <li><i class="fa-solid fa-right-to-bracket"></i> Войти</li>
             </a>
 
             {% endif %}
