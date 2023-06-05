@@ -27,33 +27,59 @@
 
   <div class="container">
     <div class="row mt-5">
-      <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4">
-{#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
-              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>
-              <p class="h5 px-3" >{{ user.username }} </p>
-
+      <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+    <div class="form-group">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row ">
+                <div class="mx-2">
+                    <div class="form-group mx-5">
+                        <label class="small ">Username:</label>
+                            {{ form.username }}
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-7">
-              <form action="" method="POST" enctype="multipart/form-data" novalidate> {% csrf_token %}
-                {% for i in p_form %}
-                {{i.label_tag}} {{i}} <small class="text-warning-emphasis" >{{i.errors|striptags}}</small>  <br><br>
+            <br><br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for key, value in form.errors.items %}
+                    <strong>{{ value }}</strong>
                 {% endfor %}
-                {{i_form.as_p}}
-                <br><br>
-                <input type="submit" class="btn btn-warning rounded-5 w-100" value="Обновить">
-              </form>
             </div>
-          </div>
+{#            <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+{#                <span aria-hidden="true">&times;</span>#}
+{#            </button>#}
         </div>
-
-
-      </div>
-
+    {% endif %}
+{#            {% if form.non_field_errors %}#}
+{#                    {% for error in form.non_field_errors %}#}
+{#                    <p class="alert alert-danger my-3">{{error}}</p>#}
+{#                    {% endfor %}#}
+{#            {% endif %}#}
+        </form>
     </div>
+{#            <div class="col-sm-4">#}
+{#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
+{#              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>#}
+{#              <p class="h5 px-3" >{{ user.username }} </p>#}
+{##}
+{#            </div>#}
+{#            <div class="col-sm-1"></div>#}
+{#            <div class="col-sm-7">#}
+{#              <form action="" method="POST" enctype="multipart/form-data" novalidate> {% csrf_token %}#}
+{#                {% for i in p_form %}#}
+{#                {{i.label_tag}} {{i}} <small class="text-warning-emphasis" >{{i.errors|striptags}}</small>  <br><br>#}
+{#                {% endfor %}#}
+{#                {{i_form.as_p}}#}
+{#                <br><br>#}
+{#                <input type="submit" class="btn btn-warning rounded-5 w-100" value="Обновить">#}
+{#              </form>#}
+{#            </div>#}
+      </div>
+        </div>
   </div>
 
 
