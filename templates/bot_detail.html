@@ -38,8 +38,10 @@
       <tr>
 {#        <th>User ID</th>#}
 {#        <th>Token</th>#}
-        <th>Balance</th>
-        <th>Base Balance</th>
+        <th>Change Balance</th>
+        <th>Sum Balance</th>
+        <th>Start Balance</th>
+        <th>USD Balance</th>
         <th>Amount BNBBUSD</th>
         <th>Amount BTCBUSD</th>
         <th>Amount ETHBUSD</th>
@@ -52,8 +54,10 @@
       <tr>
 {#        <td>{{ bot.user_id }}</td>#}
 {#        <td>{{ bot.token }}</td>#}
-        <td>{{ bot.balance|add_decimal:2 }}</td>
+        <td>{{ change_balance|add_decimal:2 }}</td>
+        <td>{{ bot.base_balance|add:change_balance|add_decimal:2 }}</td>
         <td>{{ bot.base_balance|add_decimal:2 }}</td>
+        <td>{{ bot.balance|add_decimal:2 }}</td>
         <td>{{ bot.amount_BNBBUSD|add_decimal:2 }}</td>
         <td>{{ bot.amount_BTCBUSD|add_decimal:2 }}</td>
         <td>{{ bot.amount_ETHBUSD|add_decimal:2 }}</td>
@@ -71,18 +75,42 @@
 
 
 
-{#  <div class="container">#}
-{#    <div class="row mt-10">#}
-{#      <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">#}
-{#          <h1 class="text-white text-center my-5"> Все боты {{ user.username }} </h1>#}
-{#        {% if bots %}#}
-{#        {% else %}#}
-{#            <h4 class="text-white text-center my-5"> У пользователя нет других публичных ботов :c </h4>#}
-{#        {% endif %}#}
-{#  </div>#}
-{##}
-{#    </div>#}
-{#  </div>#}
+  <div class="container">
+    <div class="row mt-10">
+      <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
+          <h2 class="text-white text-center my-5"> История сделок </h2>
+        {% if transactions %}
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Торговая пара</th>
+              <th>Курс</th>
+              <th>Количество</th>
+              <th>Сумма</th>
+              <th>Тип</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions %}
+            <tr>
+              <td>{{ transaction.date|date:"d.m.Y H:i" }}</td>
+              <td>{{ transaction.token_id }}</td>
+              <td>{{ transaction.cost|add_decimal:2 }}</td>
+              <td>{{ transaction.amount|add_decimal:2 }}</td>
+              <td>{{ transaction.cost|mul:transaction.amount|add_decimal:2 }}</td>
+              <td>{{ transaction.type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        {% else %}
+            <h4 class="text-white text-center my-5"> Бот ещё не торговал :c </h4>
+        {% endif %}
+  </div>
+
+    </div>
+  </div>
 
 </div></div></div>
 

@@ -3,7 +3,10 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 from .forms import BotCreateForm
 from django.shortcuts import render
-from bot.models import Bot
+from bot.models import Bot, Transaction
+# from bot.service.bot_service import BotService
+
+
 
 class RegisterBot(CreateView):
     form_class = BotCreateForm
@@ -26,10 +29,18 @@ class BotListView(ListView):
     def get_queryset(self):
         return Bot.objects.filter(user_id=self.request.user.id)
 
-# 'detail/<int:pk>'
 def bot_detail_view(request, pk):
+    # bot_service = BotService()
     bot = Bot.objects.get(pk=pk)
-    return render(request, 'bot_detail.html', {'bot': bot})
+    transactions = Transaction.objects.filter(bot=bot)
+    # закомментированно потому что медленно работает
+    change_balance = -63 #bot_service.get_statistic_by_bot(bot_id=pk)
+    context = {
+        'bot': bot,
+        'transactions': transactions,
+        'change_balance': change_balance
+    }
+    return render(request, 'bot_detail.html', context)
 
 
 

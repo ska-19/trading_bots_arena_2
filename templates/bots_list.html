@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load django_template_maths %}
 
 {% block title %} Боты {% endblock %}
 
@@ -8,7 +9,7 @@
     {% for bots_i in bots%}
     <div class="alert alert-warning">
         <h3>{{ bots_i.bot_name }}</h3>
-        <p>{{ bots_i.balance }}</p>
+        <p>{{ bots_i.balance|add_decimal:2 }}</p>
         <button class="btn btn-warning"> подробней</button>
     </div>
     {% endfor %}
