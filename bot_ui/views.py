@@ -26,6 +26,11 @@ class BotListView(ListView):
     def get_queryset(self):
         return Bot.objects.filter(user_id=self.request.user.id)
 
-# def bots_list(request):
-#     bots = Bot.objects.all()
-#     return render(request, 'bots_list.html', {'bots': bots})
+# 'detail/<int:pk>'
+def bot_detail_view(request, pk):
+    bot = Bot.objects.get(pk=pk)
+    return render(request, 'bot_detail.html', {'bot': bot})
+
+
+
+
