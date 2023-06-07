@@ -25,9 +25,10 @@ class RegisterBot(CreateView):
                 return self.form_invalid(form)
         form.instance.base_balance = form.instance.balance
         form.instance.user_id = self.request.user.id
-        form.instance.token = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
+        form.instance.token = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for i in range(30))
         response = super().form_valid(form)
-        context = self.get_context_data(object_id=self.object.pk)
+        token = str(form.instance.user_id) + "." + str(self.object.pk) + "." + form.instance.token
+        context = self.get_context_data(token=token)
 
         return self.render_to_response(context)  # типа отрисовка
 
@@ -53,3 +54,4 @@ def bot_detail_view(request, pk):
         'change_balance': change_balance
     }
     return render(request, 'bot_detail.html', context)
+
