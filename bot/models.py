@@ -4,7 +4,8 @@ from django.db import models
 class Bot(models.Model):
     user_id = models.IntegerField()
     bot_name = models.CharField(max_length=255, default='trade_bot')
-    token = models.IntegerField()
+    token = models.CharField(max_length=255, default='key')
+    is_public = models.BooleanField(default=True)
     balance = models.FloatField()
     base_balance = models.FloatField()
     amount_BNBBUSD = models.IntegerField(default=0)
@@ -13,6 +14,9 @@ class Bot(models.Model):
     amount_LTCBUSD = models.IntegerField(default=0)
     amount_TRXBUSD = models.IntegerField(default=0)
     amount_XRPBUSD = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.bot_name
 
 
 class Transaction(models.Model):

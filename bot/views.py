@@ -7,6 +7,14 @@ from .serializers import BotSerializer, TransactionSerializer
 from .service.bot_service import BotService
 
 
+def encode_token(request):
+    a = request.data['token'].split('.')
+    request.data["user_id"] = a[0]
+    request.data["bot_id"] = a[1]
+    request.data["key"] = a[2]
+    return request
+
+
 class BotViewSet(GenericViewSet):
     queryset = Bot.objects.all()
     serializer_class = BotSerializer()
@@ -34,12 +42,14 @@ class BotViewSet(GenericViewSet):
 
     @action(methods=['get'], detail=False)
     def get_bot_wallet(self, request):
+        request = encode_token(request)
         bots = Bot.objects.filter(user_id=request.data["user_id"])
         if self.bot_service.check_possession(user_id=request.data["user_id"], bot_id=request.data["bot_id"]):
             return Response({"wallet": self.bot_service.get_amount_of_all_coins(bot_id=request.data["bot_id"])})
 
     @action(methods=['post'], detail=False)
     def buy(self, request):
+        request = encode_token(request)
         if self.bot_service.check_possession(user_id=request.data["user_id"], bot_id=request.data["bot_id"]):
             return Response(TransactionSerializer(
                 self.bot_service.buy_token(token_id=request.data["token_id"], bot_id=request.data["bot_id"],
@@ -47,6 +57,7 @@ class BotViewSet(GenericViewSet):
 
     @action(methods=['post'], detail=False)
     def sell(self, request):
+        request = encode_token(request)
         if self.bot_service.check_possession(user_id=request.data["user_id"], bot_id=request.data["bot_id"]):
             return Response(TransactionSerializer(
                 self.bot_service.sell_token(token_id=request.data["token_id"], bot_id=request.data["bot_id"],
