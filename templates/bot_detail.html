@@ -54,8 +54,8 @@
       <tr>
 {#        <td>{{ bot.user_id }}</td>#}
 {#        <td>{{ bot.token }}</td>#}
-        <td>{{ change_balance|add_decimal:2 }}</td>
-        <td>{{ bot.base_balance|add:change_balance|add_decimal:2 }}</td>
+        <td><div id="load_change_balance"> ...</div></td>
+        <td><div id="load_sum_balance"> ...</div></td>
         <td>{{ bot.base_balance|add_decimal:2 }}</td>
         <td>{{ bot.balance|add_decimal:2 }}</td>
         <td>{{ bot.amount_BNBBUSD|add_decimal:2 }}</td>
@@ -68,6 +68,23 @@
     </tbody>
   </table>
 
+
+{% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script>
+        $(document).ready(function() {
+            $.ajax({
+                url:  "{% url 'load_change_balance' bot.id %}",
+                success: function(data) {
+                    $('#load_change_balance').html(data.change_balance_html);
+                    $('#load_sum_balance').html(data.sum_balance_html);
+
+                }
+            });
+        });
+
+    </script>
+    {% endblock javascript %}
             </div>
       </div>
     </div>

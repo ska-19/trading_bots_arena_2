@@ -7,9 +7,9 @@ from django.views.generic import CreateView, DetailView, ListView
 from .forms import BotCreateForm
 from django.shortcuts import render
 from bot.models import Bot, Transaction
-
-
-# from bot.service.bot_service import BotService
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.template.loader import render_to_string
+from bot.service.bot_service import BotService
 
 
 class RegisterBot(CreateView):
@@ -43,15 +43,26 @@ class BotListView(ListView):
 
 
 def bot_detail_view(request, pk):
-    # bot_service = BotService()
     bot = Bot.objects.get(pk=pk)
     transactions = Transaction.objects.filter(bot=bot)
     # закомментированно потому что медленно работает
-    change_balance = -63  # bot_service.get_statistic_by_bot(bot_id=pk)
     context = {
         'bot': bot,
         'transactions': transactions,
-        'change_balance': change_balance
     }
     return render(request, 'bot_detail.html', context)
+
+
+def load_change_balance(request, pk):
+    # Получите данные для отображения оставшейся части страницы
+    bot_service = BotService()
+    change_balance = bot_service.get_statistic_by_bot(bot_id=pk)
+    bot = Bot.objects.get(pk=pk)
+    sum_balance = bot.base_balance + change_balance
+    # Отрендерьте оставшуюся часть страницы и отправьте ее в качестве ответа
+    data = {
+        'change_balance_html': f'{change_balance:.{2}f}',
+        'sum_balance_html': f'{sum_balance:.{2}f}'
+    }
+    return JsonResponse(data)
 
