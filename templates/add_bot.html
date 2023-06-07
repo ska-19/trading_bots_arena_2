@@ -31,6 +31,10 @@
     <div class="row mt-5">
             <div class="shadow col-lg-6 m-auto p-5 text-white bg-success-subtle  rounded-4 text-center">
         <p class="h4 py-3" >Добавьте нового бота.</p>
+            {% if token %}
+                <p>{{ token }}</p>
+            {% endif %}
+            <p></p>
 
         <form action="" method="POST" novalidate> {% csrf_token %}
           {% for fm in form %}

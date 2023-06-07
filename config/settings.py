@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'user_reg.apps.UserRegConfig',
     'bot.apps.BotConfig',
     'bot_ui.apps.BotUiConfig',
-'django_template_maths',
+    'django_template_maths',
 ]
 
 MIDDLEWARE = [
@@ -118,7 +118,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ]
