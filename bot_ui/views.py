@@ -70,7 +70,7 @@ class BotDetailView(PermissionRequiredMixin, DetailView):
         return context
 
     def has_permission(self):
-        if self.get_object().is_public or self.request.user.id == self.object.user_id:
+        if self.request.user.is_authenticated and self.request.user.id == self.get_object().user_id:
             return True
         else:
             return False
@@ -79,6 +79,7 @@ class BotDetailView(PermissionRequiredMixin, DetailView):
 class AllBotListView(ListView):
     model = Bot
     template_name = 'ranking.html'  # отредачь шаблончик)
+    context_object_name = 'bots'
 
     def get_queryset(self):
         return Bot.objects.filter(is_public=True)

@@ -16,7 +16,10 @@
 {% endblock msg %}
 
 {% block content %}
+    <div class="features container">
+    <h1> Публичные боты </h1>
     {% for b in bots %}
         <p>{{ b.bot_name }}</p>
     {% endfor %}
+    </div>
 {% endblock %}
