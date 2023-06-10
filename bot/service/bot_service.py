@@ -62,12 +62,18 @@ class BotService:
     def get_statistic_by_bot(self, bot_id):
         estate = 0.0
         bot = Bot.objects.get(id=bot_id)
-        estate += float(bot.amount_BNBBUSD) * float(self.parser.get_coin_ticker("BNBBUSD"))
-        estate += float(bot.amount_BTCBUSD) * float(self.parser.get_coin_ticker("BTCBUSD"))
-        estate += float(bot.amount_ETHBUSD) * float(self.parser.get_coin_ticker("ETHBUSD"))
-        estate += float(bot.amount_LTCBUSD) * float(self.parser.get_coin_ticker("LTCBUSD"))
-        estate += float(bot.amount_TRXBUSD) * float(self.parser.get_coin_ticker("TRXBUSD"))
-        estate += float(bot.amount_XRPBUSD) * float(self.parser.get_coin_ticker("XRPBUSD"))
+        if bot.amount_BNBBUSD != 0:
+            estate += float(bot.amount_BNBBUSD) * float(self.parser.get_coin_ticker("BNBBUSD"))
+        if bot.amount_BTCBUSD != 0:
+            estate += float(bot.amount_BTCBUSD) * float(self.parser.get_coin_ticker("BTCBUSD"))
+        if bot.amount_ETHBUSD != 0:
+            estate += float(bot.amount_ETHBUSD) * float(self.parser.get_coin_ticker("ETHBUSD"))
+        if bot.amount_LTCBUSD != 0:
+            estate += float(bot.amount_LTCBUSD) * float(self.parser.get_coin_ticker("LTCBUSD"))
+        if bot.amount_TRXBUSD != 0:
+            estate += float(bot.amount_TRXBUSD) * float(self.parser.get_coin_ticker("TRXBUSD"))
+        if bot.amount_XRPBUSD != 0:
+            estate += float(bot.amount_XRPBUSD) * float(self.parser.get_coin_ticker("XRPBUSD"))
         return estate + float(bot.balance) - float(bot.base_balance)
 
     def get_amount_of_all_coins(self, bot_id):
