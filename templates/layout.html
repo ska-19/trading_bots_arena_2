@@ -16,14 +16,17 @@
 <body>
 <aside>
     <!--        <img src="../../static/main/img/5405579-200.png" alt="лого" height="100" width="100" />-->
-    <img src="{% static '/main/img/chart-line-alt-1-svgrepo-com.svg' %}" alt="лого" height="100" width="100"/>
+<a href="{% url 'home' %}" style="text-decoration: none;">
+  <img src="{% static '/main/img/chart-line-alt-1-svgrepo-com.svg' %}" alt="лого" height="100" width="100"/>
     <span class="logo">TBA</span>
+</a>
+
     <h3>Навигация</h3>
     <ul>
         <a href="{% url 'home' %}">
             <li><i class="fa-solid fa-house"></i> Главная</li>
         </a>
-        <a href="{% url 'home' %}">
+        <a href="{% url 'ranking' %}">
             <li><i class="fa-solid fa-newspaper"></i> Глобальный рейтинг </li>
         </a>
             <a href="{% url 'bots_list' %}">

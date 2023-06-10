@@ -7,3 +7,8 @@ class BotCreateForm(forms.ModelForm):
         model = Bot
         fields = ['bot_name', 'balance', 'is_public']
 
+
+class BotUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Bot
+        fields = ['bot_name', 'is_public']

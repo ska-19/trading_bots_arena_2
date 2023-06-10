@@ -30,11 +30,41 @@
   <div class="container">
     <div class="row mt-5">
             <div class="shadow col-lg-6 m-auto p-5 text-white bg-success-subtle  rounded-4 text-center">
-        <p class="h4 py-3" >Добавьте нового бота.</p>
             {% if token %}
-                <p>{{ token }}</p>
-            {% endif %}
-            <p></p>
+                <p class="h4 py-3"> Бот успешно добавлен! </p>
+                <head>
+        <p class="h6 py-3"> Скопируйте токен: </p>
+      <script>
+        function copyToClipboard() {
+            var text = document.getElementById("textToCopy").innerText;
+
+            // Создаем временный элемент textarea
+            var tempElement = document.createElement("textarea");
+            tempElement.value = text;
+            document.body.appendChild(tempElement);
+
+            // Выделяем весь текст внутри элемента textarea
+            tempElement.select();
+            tempElement.setSelectionRange(0, 99999); /* Для мобильных устройств */
+
+            // Копируем выделенный текст в буфер обмена
+            document.execCommand("copy");
+
+            // Удаляем временный элемент textarea
+            document.body.removeChild(tempElement);
+
+            // Выводим сообщение об успешном копировании
+            alert("Текст скопирован в буфер обмена!");
+        }
+    </script>
+</head>
+<body>
+    <p id="textToCopy">{{ token }}</p>
+    <button type="button" class="btn btn-warning" onclick="copyToClipboard()">Копировать токен</button>
+</body>
+            {% else %}
+
+        <p class="h4 py-3" >Добавьте нового бота.</p>
 
         <form action="" method="POST" novalidate> {% csrf_token %}
           {% for fm in form %}
@@ -51,6 +81,7 @@
           {% endif %}
 
         </form><br>
+            {% endif %}
 
       </div>
     </div>
