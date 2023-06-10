@@ -34,8 +34,11 @@ def logout_user(request):
 
 def profile(request, id):
     if request.user.is_authenticated:
-        user = User.objects.get(id=id)
-        return render(request, 'profile.html', context={'user': user})
+        context = {
+            'user': User.objects.get(id=id),
+            'bots': Bot.objects.filter(is_public=True, user_id=id),
+        }
+        return render(request, 'profile.html', context=context)
     else:
         return HttpResponseRedirect('/user/login/')
 
@@ -59,15 +62,9 @@ def user_profile(request, id):
                     'form': form,
                 }
                 return render(request, 'userprofile.html', context)
-
         else:
-            context = {
-                'user': User.objects.get(pk=id),
-            }
-            # except ObjectDoesNotExist:
-            #     messages.warning(request, 'User Does Not Exist')
-            # return redirect('home')
-            return render(request, 'profile.html', context)
+            return profile(request, id)
+
     else:
         return HttpResponseRedirect('/user/login/')
 
