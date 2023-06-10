@@ -3,9 +3,16 @@
 {% load django_template_maths %}
 
 {% block content %}
+<div class="col-14 container">
+  <h1 class="text-center text-white">
+    Бот
+  </h1>
+
   <div class="container">
-    <div class="row mt-10">
-      <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
+    <div class="row mt-5">
+      <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+    <div class="form-group">
+              <h1 class="text-center">Вы уверенны, что хотите удалить бота?</h1>
           <form method="post">
     {% csrf_token %}
 
@@ -16,7 +23,9 @@
 
 
 <button type="submit" class="btn btn-danger">Удалить</button>
-
+           <a href="{% url 'bot_edit' bot.id %}" class="btn btn-secondary">Отмена</a>
+</form>
+  </div>
   </div>
     </div>
   </div>

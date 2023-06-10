@@ -36,7 +36,7 @@
         <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
         <div class="form-error">{{ f.errors }}</div>
     {% endfor %}
-<button type="submit" class="btn btn btn-dark btn-lg" >Сохранить изменения</button>
+<button type="submit" class="btn btn btn-secondary btn-lg" >Сохранить изменения</button>
         <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger btn-lg">Удалить бота</a>
 
 {#<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить бота</button>#}

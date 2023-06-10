@@ -101,8 +101,8 @@ class BotUpdateView(PermissionRequiredMixin, UpdateView):
     model = Bot
     form_class = BotUpdateForm
     template_name = 'bot_update.html'
-    success_url = reverse_lazy('bots_list')
-
+    def get_success_url(self):
+        return reverse_lazy('bot_detail', kwargs={'pk': self.kwargs['pk']})
     def form_valid(self, form):
         bot = Bot.objects.get(pk=self.kwargs['pk'])
         if bot.bot_name == form.instance.bot_name:

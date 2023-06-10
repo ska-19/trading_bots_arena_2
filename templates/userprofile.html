@@ -40,8 +40,8 @@
                 </div>
             </div>
             <br><br>
-            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
-            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+            <button type="submit" class="btn btn-dark btn-lg">Сохранить</button>
+            <button type="reset" class="btn btn-dark btn-lg">Сбросить</button>
         {% if form.errors %}
         <div class="alert alert-danger alert-dismissible" role="alert">
             <div id="form_errors">
@@ -95,7 +95,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
-      <th scope="col">Status</th>
+      <th scope="col">Public</th>
       <th scope="col">Balance</th>
       <th scope="col">PNL</th>
     </tr>
@@ -110,7 +110,7 @@
                 <li>{{ bots_i.bot_name }}</li>
           </a>
       </td>
-        <td> Off </td>
+        <td> {{ bots_i.is_public }} </td>
       <td>{{ bots_i.balance|add_decimal:2 }}</td>
       <td>{{ bots_i.balance|percent_of_number:bots_i.base_balance|add_decimal:2|sub:100 }}% </td>
     </tr>
