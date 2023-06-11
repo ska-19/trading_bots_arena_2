@@ -1,5 +1,5 @@
 from django.db.models import Sum
-
+import asyncio
 from bot.models import Bot, Transaction
 from bot.util.Parser import Parser
 
@@ -10,11 +10,8 @@ class BotService:
 
     def buy_token(self, token_id, bot_id, amount):
         price = float(self.parser.get_coin_ticker(token_id))
+        bot = Bot.objects.get(id=bot_id)
         if self.validate_operation(bot_id=bot_id, price=price, amount=amount, token_id=token_id, type="BUY"):
-            transact = Transaction.objects.create(bot_id=bot_id, cost=float(amount * price), amount=float(amount),
-                                                  token_id=token_id,
-                                                  type="BUY")
-            bot = Bot.objects.get(id=bot_id)
             updated_data = {"user_id": bot.user_id,
                             "bot_name": bot.bot_name,
                             "token": bot.token,
@@ -27,18 +24,25 @@ class BotService:
                             "amount_TRXBUSD": bot.amount_TRXBUSD,
                             "amount_XRPBUSD": bot.amount_XRPBUSD}
             updated_data["amount_" + token_id] += amount
-            updated_data["balance"] -= float(transact.cost)
+            updated_data["balance"] -= float(amount * price)
             bot.__dict__.update(updated_data)
             bot.save()
+            transact = Transaction.objects.create(bot_id=bot_id, cost=float(amount * price), amount=float(amount),
+                                                  token_id=token_id,
+                                                  type="BUY",
+                                                  balance=bot.balance,
+                                                  amount_BNBBUSD=bot.amount_BNBBUSD,
+                                                  amount_BTCBUSD=bot.amount_BTCBUSD,
+                                                  amount_ETHBUSD=bot.amount_ETHBUSD,
+                                                  amount_LTCBUSD=bot.amount_LTCBUSD,
+                                                  amount_TRXBUSD=bot.amount_TRXBUSD,
+                                                  amount_XRPBUSD=bot.amount_XRPBUSD)
             return transact
 
     def sell_token(self, token_id, bot_id, amount):
         price = float(self.parser.get_coin_ticker(token_id))
+        bot = Bot.objects.get(id=bot_id)
         if self.validate_operation(bot_id=bot_id, price=price, amount=amount, token_id=token_id, type="SELL"):
-            transact = Transaction.objects.create(bot_id=bot_id, cost=float(amount * price), amount=float(amount),
-                                                  token_id=token_id,
-                                                  type="SELL")
-            bot = Bot.objects.get(id=bot_id)
             updated_data = {"user_id": bot.user_id,
                             "bot_name": bot.bot_name,
                             "token": bot.token,
@@ -51,9 +55,20 @@ class BotService:
                             "amount_TRXBUSD": bot.amount_TRXBUSD,
                             "amount_XRPBUSD": bot.amount_XRPBUSD}
             updated_data["amount_" + token_id] -= amount
-            updated_data["balance"] += float(transact.cost)
+            updated_data["balance"] +=  float(amount * price)
             bot.__dict__.update(updated_data)
             bot.save()
+            transact = Transaction.objects.create(bot_id=bot_id, cost=float(amount * price), amount=float(amount),
+                                                  token_id=token_id,
+                                                  type="SELL",
+                                                  balance=bot.balance,
+                                                  amount_BNBBUSD=bot.amount_BNBBUSD,
+                                                  amount_BTCBUSD=bot.amount_BTCBUSD,
+                                                  amount_ETHBUSD=bot.amount_ETHBUSD,
+                                                  amount_LTCBUSD=bot.amount_LTCBUSD,
+                                                  amount_TRXBUSD=bot.amount_TRXBUSD,
+                                                  amount_XRPBUSD=bot.amount_XRPBUSD
+                                                  )
             return transact
 
     def coin_ticker(self, token_id):

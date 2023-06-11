@@ -20,177 +20,300 @@
 
 
 {% block content %}
-<div class="col-14 container">
-    <h1 class="text-center text-white">
-        Описание бота
-    </h1>
+    <div class="col-14 container">
+        <h1 class="text-center text-white">
+            Описание бота
+        </h1>
 
-    <div class="container">
-        <div class="row mt-5">
-            <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-mx-auto">
-                            {#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
-                            {#              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>#}
-                            <p class="h2  mx-auto text-center">{{ bot.bot_name }} </p>
-                            <table class="table table-striped table-dark">
-                                <thead>
-                                <tr>
-                                    {#        <th>User ID</th>#}
-                                    {#        <th>Token</th>#}
-                                    <th>Change Balance</th>
-                                    <th>Sum Balance</th>
-                                    <th>Start Balance</th>
-                                    <th>USD Balance</th>
-                                    <th>Amount BNBBUSD</th>
-                                    <th>Amount BTCBUSD</th>
-                                    <th>Amount ETHBUSD</th>
-                                    <th>Amount LTCBUSD</th>
-                                    <th>Amount TRXBUSD</th>
-                                    <th>Amount XRPBUSD</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    {#        <td>{{ bot.user_id }}</td>#}
-                                    {#        <td>{{ bot.token }}</td>#}
-                                    <td>
-                                        <div id="load_change_balance"> ...</div>
-                                    </td>
-                                    <td>
-                                        <div id="load_sum_balance"> ...</div>
-                                    </td>
-                                    <td>{{ bot.base_balance|add_decimal:2 }}</td>
-                                    <td>{{ bot.balance|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_BNBBUSD|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_BTCBUSD|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_ETHBUSD|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_LTCBUSD|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_TRXBUSD|add_decimal:2 }}</td>
-                                    <td>{{ bot.amount_XRPBUSD|add_decimal:2 }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-
-                            {% block javascript %}
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                                <script>
-                                    $(document).ready(function () {
-                                        $.ajax({
-                                            url: "{% url 'load_change_balance' bot.id %}",
-                                            success: function (data) {
-                                                $('#load_change_balance').html(data.change_balance_html);
-                                                $('#load_sum_balance').html(data.sum_balance_html);
-
-                                            }
-                                        });
-                                    });
-
-                                </script>
-                            {% endblock javascript %}
-                            <!-- Подключение необходимых библиотек -->
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">#}
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-                            <!-- Кнопка "Удалить" -->
-                            {#<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>#}
-
-                            <!-- Модальное окно -->
-                            {#<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
-                            {#  <div class="modal-dialog" role="document">#}
-                            {#    <div class="modal-content">#}
-                            {#      <div class="modal-header">#}
-                            {#        <h5 class="modal-title" id="deleteModalLabel">Удаление объекта</h5>#}
-                            {#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-                            {#      </div>#}
-                            {#      <div class="modal-body">#}
-                            {#        <p>Вы уверены, что хотите удалить объект?</p>#}
-                            {#      </div>#}
-                            {#      <div class="modal-footer">#}
-                            {#        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>#}
-                            {#        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger">Удалить бота</a>#}
-                            {#      </div>#}
-                            {#    </div>#}
-                            {#  </div>#}
-                            {#</div>#}
-                            <a href="{% url 'bot_edit' bot.id %}" class="btn btn-dark btn-lg">Редактировать бота</a>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row mt-10">
-                    <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
-                        <title> Bots</title>
-                        <meta charset="utf-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1">
-                        {#    <link rel="stylesheet" href=#}
-                        {#"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-                        </script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
-                        </script>
-                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
-                        </script>
-                        <link rel="stylesheet"
-                              href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-                        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-                        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js">
-                        </script>
-                        </head>
-
-                        <div class="container" style="width:100%" ;>
-                            <h1 style="color:white"> История сделок </h1>
-                            {% if transactions %}
-                                <table id="example" class="table table-striped
-            table-bordered table-dark"
-                                       style="width:100%; color:white;">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-mx-auto">
+                                {#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
+                                {#              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>#}
+                                <p class="h2  mx-auto text-center">{{ bot.bot_name }} </p>
+                                <table class="table table-striped table-dark">
                                     <thead>
                                     <tr>
-                                        <th>Дата</th>
-                                        <th>Торговая пара</th>
-                                        <th>Курс</th>
-                                        <th>Количество</th>
-                                        <th>Сумма</th>
-                                        <th>Тип</th>
+                                        {#        <th>User ID</th>#}
+                                        {#        <th>Token</th>#}
+                                        <th>Change Balance</th>
+                                        <th>Sum Balance</th>
+                                        <th>Start Balance</th>
+                                        <th>USD Balance</th>
+                                        <th>Amount BNBBUSD</th>
+                                        <th>Amount BTCBUSD</th>
+                                        <th>Amount ETHBUSD</th>
+                                        <th>Amount LTCBUSD</th>
+                                        <th>Amount TRXBUSD</th>
+                                        <th>Amount XRPBUSD</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                     {% for transaction in transactions %}
-                                <tr>
-                                    <td>{{ transaction.date|date:"d.m.Y H:i" }}</td>
-                                    <td>{{ transaction.token_id }}</td>
-                                    <td>{{ transaction.cost|add_decimal:2 }}</td>
-                                    <td>{{ transaction.amount|add_decimal:2 }}</td>
-                                    <td>{{ transaction.cost|mul:transaction.amount|add_decimal:2 }}</td>
-                                    <td>{{ transaction.type }}</td>
-                                </tr>
-                            {% endfor %}
+                                    <tr>
+                                        {#        <td>{{ bot.user_id }}</td>#}
+                                        {#        <td>{{ bot.token }}</td>#}
+                                        <td>
+                                            <div id="load_change_balance"> ...</div>
+                                        </td>
+                                        <td>
+                                            <div id="load_sum_balance"> ...</div>
+                                        </td>
+                                        <td>{{ bot.base_balance|add_decimal:2 }}</td>
+                                        <td>{{ bot.balance|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_BNBBUSD|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_BTCBUSD|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_ETHBUSD|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_LTCBUSD|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_TRXBUSD|add_decimal:2 }}</td>
+                                        <td>{{ bot.amount_XRPBUSD|add_decimal:2 }}</td>
+                                    </tr>
                                     </tbody>
-
                                 </table>
-                            {% else %}
-                                <h4 class="text-white text-center my-5"> Бот ещё не торговал :c </h4>
-                            {% endif %}
+
+
+                                {% block javascript %}
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $.ajax({
+                                                url: "{% url 'load_change_balance' bot.id %}",
+                                                success: function (data) {
+                                                    $('#load_change_balance').html(data.change_balance_html);
+                                                    $('#load_sum_balance').html(data.sum_balance_html);
+
+                                                }
+                                            });
+                                        });
+
+                                    </script>
+                                {% endblock javascript %}
+                                <!-- Подключение необходимых библиотек -->
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">#}
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+                                <!-- Кнопка "Удалить" -->
+                                {#<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>#}
+
+                                <!-- Модальное окно -->
+                                {#<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
+                                {#  <div class="modal-dialog" role="document">#}
+                                {#    <div class="modal-content">#}
+                                {#      <div class="modal-header">#}
+                                {#        <h5 class="modal-title" id="deleteModalLabel">Удаление объекта</h5>#}
+                                {#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+                                {#      </div>#}
+                                {#      <div class="modal-body">#}
+                                {#        <p>Вы уверены, что хотите удалить объект?</p>#}
+                                {#      </div>#}
+                                {#      <div class="modal-footer">#}
+                                {#        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>#}
+                                {#        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger">Удалить бота</a>#}
+                                {#      </div>#}
+                                {#    </div>#}
+                                {#  </div>#}
+                                {#</div>#}
+                                <a href="{% url 'bot_edit' bot.id %}" class="btn btn-dark btn-lg">Редактировать бота</a>
+
+
+                            </div>
                         </div>
-                        <script>
-                            $(document).ready(function () {
-                                $('#example').DataTable();
-                            });
-                        </script>
                     </div>
                 </div>
-            </div>
 
+                <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-mx-auto">
+                                <script src="https://code.highcharts.com/highcharts.js"></script>
+                                <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                                <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                                <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                                <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                                <figure class="highcharts-figure">
+                                    <div id="container"></div>
+                                </figure>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var chartData = [
+                                            {% for transaction in transactions %}
+                                                {
+                                                    x: new Date('{{ transaction.date|date:"Y-m-d H:i:s" }}').getTime(),
+                                                    y: {{ transaction.balance }},
+                                                    amount_BNBBUSD: {{ transaction.amount_BNBBUSD }},
+                                                    amount_BTCBUSD: {{ transaction.amount_BTCBUSD }},
+                                                    amount_ETHBUSD: {{ transaction.amount_ETHBUSD }}
+                                                },
+                                            {% endfor %}
+                                        ];
+
+                                        Highcharts.chart('container', {
+                                            title: {
+                                                text: 'Balance Trend',
+                                                style: {
+                                                    color: '#ffffff' // Set the font color to white
+                                                },
+                                                x: -20 //center
+                                            },
+                                            xAxis: {
+                                                type: 'datetime',
+                                                labels: {
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color to white
+                                                    }
+                                                }
+                                            },
+                                            yAxis: [{
+                                                title: {
+                                                    text: 'Balance',
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color of the yAxis title to white
+                                                    }
+                                                },
+                                                labels: {
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                    }
+                                                }
+                                            },
+                                                {
+                                                    title: {
+                                                        text: 'Amount',
+                                                        style: {
+                                                            color: '#ffffff' // Set the font color of the yAxis title to white
+                                                        }
+                                                    },
+                                                    labels: {
+                                                        style: {
+                                                            color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                        }
+                                                    },
+                                                    opposite: true
+                                                }],
+                                            legend: {
+                                                layout: 'vertical',
+                                                align: 'right',
+                                                verticalAlign: 'middle',
+                                                borderWidth: 0,
+                                                itemStyle: {
+                                                    color: '#ffffff' // Set the font color of the legend items to white
+                                                }
+                                            },
+                                            tooltip: {
+                                                style: {
+                                                    color: '#ffffff' // Set the font color of the tooltip text to white
+                                                }
+                                            },
+                                            plotOptions: {
+                                                series: {
+                                                    marker: {
+                                                        enabled: true,
+                                                        radius: 2.5
+                                                    }
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'Balance',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.y];
+                                                }),
+                                                yAxis: 0
+                                            }, {
+                                                name: 'Amount BNBBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_BNBBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }, {
+                                                name: 'Amount BTCBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_BTCBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }, {
+                                                name: 'Amount ETHBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_ETHBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }]
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row mt-10">
+                        <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
+                            <title> Bots</title>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                            {#    <link rel="stylesheet" href=#}
+                            {#"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+                            </script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+                            </script>
+                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+                            </script>
+                            <link rel="stylesheet"
+                                  href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+                            <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+                            <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js">
+                            </script>
+                            </head>
+
+                            <div class="container" style="width:100%" ;>
+                                <h1 style="color:white"> История сделок </h1>
+                                {% if transactions %}
+                                    <table id="example" class="table table-striped
+            table-bordered table-dark"
+                                           style="width:100%; color:white;">
+                                        <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Торговая пара</th>
+                                            <th>Курс</th>
+                                            <th>Количество</th>
+                                            <th>Сумма</th>
+                                            <th>Тип</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for transaction in transactions %}
+                                            <tr>
+                                                <td>{{ transaction.date|date:"d.m.Y H:i" }}</td>
+                                                <td>{{ transaction.token_id }}</td>
+                                                <td>{{ transaction.cost|add_decimal:2 }}</td>
+                                                <td>{{ transaction.amount|add_decimal:2 }}</td>
+                                                <td>{{ transaction.cost|mul:transaction.amount|add_decimal:2 }}</td>
+                                                <td>{{ transaction.type }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                {% else %}
+                                    <h4 class="text-white text-center my-5"> Бот ещё не торговал :c </h4>
+                                {% endif %}
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#example').DataTable();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
-</div>
-
-
 {% endblock content %}
