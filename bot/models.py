@@ -26,6 +26,7 @@ class Transaction(models.Model):
     token_id = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     type = models.CharField(max_length=255)
+    balance =  models.IntegerField(default=0)
     amount_BNBBUSD = models.IntegerField(default=0)
     amount_BTCBUSD = models.IntegerField(default=0)
     amount_ETHBUSD = models.IntegerField(default=0)
