@@ -124,6 +124,130 @@
                     </div>
                 </div>
 
+                <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-mx-auto">
+                                <script src="https://code.highcharts.com/highcharts.js"></script>
+                                <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                                <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                                <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                                <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                                <figure class="highcharts-figure">
+                                    <div id="container"></div>
+                                </figure>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var chartData = [
+                                            {% for transaction in transactions %}
+                                                {
+                                                    x: new Date('{{ transaction.date|date:"Y-m-d H:i:s" }}').getTime(),
+                                                    y: {{ transaction.balance }},
+                                                    amount_BNBBUSD: {{ transaction.amount_BNBBUSD }},
+                                                    amount_BTCBUSD: {{ transaction.amount_BTCBUSD }},
+                                                    amount_ETHBUSD: {{ transaction.amount_ETHBUSD }}
+                                                },
+                                            {% endfor %}
+                                        ];
+
+                                        Highcharts.chart('container', {
+                                            title: {
+                                                text: 'Balance Trend',
+                                                style: {
+                                                    color: '#ffffff' // Set the font color to white
+                                                },
+                                                x: -20 //center
+                                            },
+                                            xAxis: {
+                                                type: 'datetime',
+                                                labels: {
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color to white
+                                                    }
+                                                }
+                                            },
+                                            yAxis: [{
+                                                title: {
+                                                    text: 'Balance',
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color of the yAxis title to white
+                                                    }
+                                                },
+                                                labels: {
+                                                    style: {
+                                                        color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                    }
+                                                }
+                                            },
+                                                {
+                                                    title: {
+                                                        text: 'Amount',
+                                                        style: {
+                                                            color: '#ffffff' // Set the font color of the yAxis title to white
+                                                        }
+                                                    },
+                                                    labels: {
+                                                        style: {
+                                                            color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                        }
+                                                    },
+                                                    opposite: true
+                                                }],
+                                            legend: {
+                                                layout: 'vertical',
+                                                align: 'right',
+                                                verticalAlign: 'middle',
+                                                borderWidth: 0,
+                                                itemStyle: {
+                                                    color: '#ffffff' // Set the font color of the legend items to white
+                                                }
+                                            },
+                                            tooltip: {
+                                                style: {
+                                                    color: '#ffffff' // Set the font color of the tooltip text to white
+                                                }
+                                            },
+                                            plotOptions: {
+                                                series: {
+                                                    marker: {
+                                                        enabled: true,
+                                                        radius: 2.5
+                                                    }
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'Balance',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.y];
+                                                }),
+                                                yAxis: 0
+                                            }, {
+                                                name: 'Amount BNBBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_BNBBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }, {
+                                                name: 'Amount BTCBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_BTCBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }, {
+                                                name: 'Amount ETHBUSD',
+                                                data: chartData.map(function (item) {
+                                                    return [item.x, item.amount_ETHBUSD];
+                                                }),
+                                                yAxis: 1
+                                            }]
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container">
                     <div class="row mt-10">
                         <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
@@ -188,134 +312,6 @@
                     </div>
                 </div>
 
-                <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-mx-auto">
-                                <script src="https://code.highcharts.com/highcharts.js"></script>
-                                <script src="https://code.highcharts.com/5/js/highcharts.js"></script>
-                                <div id="container"></div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        var chartData = [
-                                            {% for transaction in transactions %}
-                                                [new Date('{{ transaction.date|date:"Y-m-d H:i:s" }}').getTime(), {{ transaction.balance }}, {{ transaction.amount_BNBBUSD }}, {{ transaction.amount_BTCBUSD }}, {{ transaction.amount_ETHBUSD }}],
-                                            {% endfor %}
-                                        ];
-                                        Highcharts.chart('container', {
-
-                                            title: {
-                                                text: 'Balance Trend',
-                                                style: {
-                                                    color: '#ffffff' // Set the font color to white
-                                                },
-                                                x: -20 //center
-                                            },
-                                            xAxis: {
-                                                type: 'datetime',
-                                                labels: {
-                                                    style: {
-                                                        color: '#ffffff' // Set the font color to white
-                                                    }
-                                                }
-                                            },
-                                            yAxis: [{
-                                                title: {
-                                                    text: 'Balance',
-                                                    style: {
-                                                        color: '#ffffff' // Set the font color of the yAxis title to white
-                                                    }
-                                                },
-                                                labels: {
-                                                    style: {
-                                                        color: '#ffffff' // Set the font color of the yAxis labels to white
-                                                    }
-                                                }
-                                            },
-                                                {
-                                                    title: {
-                                                        text: 'Amount',
-                                                        style: {
-                                                            color: '#ffffff' // Set the font color of the yAxis title to white
-                                                        }
-                                                    },
-                                                    labels: {
-                                                        style: {
-                                                            color: '#ffffff' // Set the font color of the yAxis labels to white
-                                                        }
-                                                    },
-                                                    opposite: true
-                                                }],
-                                            legend: {
-                                                layout: 'vertical',
-                                                align: 'right',
-                                                verticalAlign: 'middle',
-                                                borderWidth: 0,
-                                                itemStyle: {
-                                                    color: '#ffffff' // Set the font color of the legend items to white
-                                                }
-                                            },
-                                            tooltip: {
-                                                style: {
-                                                    color: '#ffffff' // Set the font color of the tooltip text to white
-                                                }
-                                            },
-                                            series: [{
-                                                name: 'Balance',
-                                                data: chartData.map(function (item) {
-                                                    return [item[0], item[1]];
-                                                }),
-                                                yAxis: 0
-                                            }, {
-                                                name: 'Amount BNBBUSD',
-                                                data: chartData.map(function (item) {
-                                                    return [item[0], item[2]];
-                                                }),
-                                                yAxis: 1
-                                            }, {
-                                                name: 'Amount BTCBUSD',
-                                                data: chartData.map(function (item) {
-                                                    return [item[0], item[3]];
-                                                }),
-                                                yAxis: 1
-                                            }, {
-                                                name: 'Amount ETHBUSD',
-                                                data: chartData.map(function (item) {
-                                                    return [item[0], item[4]];
-                                                }),
-                                                yAxis: 1
-                                            }]
-                                        });
-                                    });
-
-                                    {#    Highcharts.chart('chart-container', {#}
-                                    {#        chart: {#}
-                                    {#            type: 'line'#}
-                                    {#        },#}
-                                    {#        title: {#}
-                                    {#            text: 'Balance Trend'#}
-                                    {#        },#}
-                                    {#        xAxis: {#}
-                                    {#            type: 'datetime'#}
-                                    {#        },#}
-                                    {#        yAxis: {#}
-                                    {#            title: {#}
-                                    {#                text: 'Balance'#}
-                                    {#            }#}
-                                    {#        },#}
-                                    {#        series: [{#}
-                                    {#            name: 'Balance',#}
-                                    {#            data: chartData#}
-                                    {#        }]#}
-                                    {#    });#}
-
-                                </script>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
