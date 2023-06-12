@@ -14,23 +14,26 @@ from bot.models import Bot
 from .forms import *
 from .models import *
 
+
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'register.html'
     success_url = reverse_lazy(
-        'login')  # ленивый редирект, обычный ловит ерор, тк джанго можешт на момент создания класса еще не сгенерить
-    # редирект(хз почему)
-
+        'login')
 
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'login.html'
+
     def get_success_url(self):
         return reverse_lazy('home')
+
+
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/user/login/')
+
 
 def profile(request, id):
     if request.user.is_authenticated:
@@ -42,6 +45,7 @@ def profile(request, id):
     else:
         return HttpResponseRedirect('/user/login/')
 
+
 def user_profile(request, id):
     if request.user.is_authenticated:
         if id == request.user.id:
@@ -49,10 +53,8 @@ def user_profile(request, id):
                 form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
                 if form.is_valid():
                     form.save()
-                    # messages.success(request, 'Your profile was successfully updated!')
                     return redirect('userprofile', id=id)
                 else:
-                    # form.add_error(None, 'error description')
                     return render(request, 'userprofile.html', {'form': form})
             else:
                 form = UpdateProfileForm(instance=request.user)
@@ -67,4 +69,3 @@ def user_profile(request, id):
 
     else:
         return HttpResponseRedirect('/user/login/')
-

@@ -31,14 +31,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-mx-auto">
-                                {#              <img class="rounded-circle profileSize" src="{{ user.profile.image.url }}" alt="Аватарка">#}
-                                {#              <p class="h2 px-3 pt-3 text-white" >{{ user.first_name }} {{ user.last_name }}</p>#}
                                 <p class="h2  mx-auto text-center">{{ bot.bot_name }} </p>
                                 <table class="table table-striped table-dark">
                                     <thead>
                                     <tr>
-                                        {#        <th>User ID</th>#}
-                                        {#        <th>Token</th>#}
                                         <th>Change Balance</th>
                                         <th>Sum Balance</th>
                                         <th>Start Balance</th>
@@ -53,8 +49,6 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        {#        <td>{{ bot.user_id }}</td>#}
-                                        {#        <td>{{ bot.token }}</td>#}
                                         <td>
                                             <div id="load_change_balance"> ...</div>
                                         </td>
@@ -90,32 +84,8 @@
 
                                     </script>
                                 {% endblock javascript %}
-                                <!-- Подключение необходимых библиотек -->
                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                                {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">#}
                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-                                <!-- Кнопка "Удалить" -->
-                                {#<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>#}
-
-                                <!-- Модальное окно -->
-                                {#<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
-                                {#  <div class="modal-dialog" role="document">#}
-                                {#    <div class="modal-content">#}
-                                {#      <div class="modal-header">#}
-                                {#        <h5 class="modal-title" id="deleteModalLabel">Удаление объекта</h5>#}
-                                {#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-                                {#      </div>#}
-                                {#      <div class="modal-body">#}
-                                {#        <p>Вы уверены, что хотите удалить объект?</p>#}
-                                {#      </div>#}
-                                {#      <div class="modal-footer">#}
-                                {#        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>#}
-                                {#        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger">Удалить бота</a>#}
-                                {#      </div>#}
-                                {#    </div>#}
-                                {#  </div>#}
-                                {#</div>#}
                                 <a href="{% url 'bot_edit' bot.id %}" class="btn btn-dark btn-lg">Редактировать бота</a>
 
 
@@ -154,7 +124,7 @@
                                             title: {
                                                 text: 'Balance Trend',
                                                 style: {
-                                                    color: '#ffffff' // Set the font color to white
+                                                    color: '#ffffff'
                                                 },
                                                 x: -20 //center
                                             },
@@ -162,7 +132,7 @@
                                                 type: 'datetime',
                                                 labels: {
                                                     style: {
-                                                        color: '#ffffff' // Set the font color to white
+                                                        color: '#ffffff'
                                                     }
                                                 }
                                             },
@@ -170,12 +140,12 @@
                                                 title: {
                                                     text: 'Balance',
                                                     style: {
-                                                        color: '#ffffff' // Set the font color of the yAxis title to white
+                                                        color: '#ffffff'
                                                     }
                                                 },
                                                 labels: {
                                                     style: {
-                                                        color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                        color: '#ffffff'
                                                     }
                                                 }
                                             },
@@ -183,12 +153,12 @@
                                                     title: {
                                                         text: 'Amount',
                                                         style: {
-                                                            color: '#ffffff' // Set the font color of the yAxis title to white
+                                                            color: '#ffffff'
                                                         }
                                                     },
                                                     labels: {
                                                         style: {
-                                                            color: '#ffffff' // Set the font color of the yAxis labels to white
+                                                            color: '#ffffff'
                                                         }
                                                     },
                                                     opposite: true
@@ -199,12 +169,12 @@
                                                 verticalAlign: 'middle',
                                                 borderWidth: 0,
                                                 itemStyle: {
-                                                    color: '#ffffff' // Set the font color of the legend items to white
+                                                    color: '#ffffff'
                                                 }
                                             },
                                             tooltip: {
                                                 style: {
-                                                    color: '#ffffff' // Set the font color of the tooltip text to white
+                                                    color: '#ffffff'
                                                 }
                                             },
                                             plotOptions: {
@@ -254,8 +224,6 @@
                             <title> Bots</title>
                             <meta charset="utf-8">
                             <meta name="viewport" content="width=device-width, initial-scale=1">
-                            {#    <link rel="stylesheet" href=#}
-                            {#"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
                             </script>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">

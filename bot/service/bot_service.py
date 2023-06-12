@@ -55,7 +55,7 @@ class BotService:
                             "amount_TRXBUSD": bot.amount_TRXBUSD,
                             "amount_XRPBUSD": bot.amount_XRPBUSD}
             updated_data["amount_" + token_id] -= amount
-            updated_data["balance"] +=  float(amount * price)
+            updated_data["balance"] += float(amount * price)
             bot.__dict__.update(updated_data)
             bot.save()
             transact = Transaction.objects.create(bot_id=bot_id, cost=float(amount * price), amount=float(amount),
