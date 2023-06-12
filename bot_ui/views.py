@@ -16,7 +16,7 @@ from bot.service.bot_service import BotService
 class RegisterBot(CreateView):
     form_class = BotCreateForm
     template_name = 'add_bot.html'
-    success_url = 'home'  # просто раномный редирект
+    success_url = 'home'
 
     def form_valid(self, form):
         bots = Bot.objects.filter(user_id=self.request.user.id)
@@ -32,7 +32,7 @@ class RegisterBot(CreateView):
         token = str(form.instance.user_id) + "." + str(self.object.pk) + "." + form.instance.token
         context = self.get_context_data(token=token)
 
-        return self.render_to_response(context)  # типа отрисовка
+        return self.render_to_response(context)
 
 
 class BotListView(ListView):
@@ -44,14 +44,11 @@ class BotListView(ListView):
         return Bot.objects.filter(user_id=self.request.user.id)
 
 
-# это я боюсь менять, пусть будет единственное исключение
 def load_change_balance(request, pk):
-    # Получите данные для отображения оставшейся части страницы
     bot_service = BotService()
     change_balance = bot_service.get_statistic_by_bot(bot_id=pk)
     bot = Bot.objects.get(pk=pk)
     sum_balance = bot.base_balance + change_balance
-    # Отрендерьте оставшуюся часть страницы и отправьте ее в качестве ответа
     data = {
         'change_balance_html': f'{change_balance:.{2}f}',
         'sum_balance_html': f'{sum_balance:.{2}f}'
@@ -78,7 +75,7 @@ class BotDetailView(PermissionRequiredMixin, DetailView):
 
 class AllBotListView(ListView):
     model = Bot
-    template_name = 'ranking.html'  # отредачь шаблончик)
+    template_name = 'ranking.html'
     context_object_name = 'bots'
 
     def get_queryset(self):
@@ -101,8 +98,10 @@ class BotUpdateView(PermissionRequiredMixin, UpdateView):
     model = Bot
     form_class = BotUpdateForm
     template_name = 'bot_update.html'
+
     def get_success_url(self):
         return reverse_lazy('bot_detail', kwargs={'pk': self.kwargs['pk']})
+
     def form_valid(self, form):
         bot = Bot.objects.get(pk=self.kwargs['pk'])
         if bot.bot_name == form.instance.bot_name:

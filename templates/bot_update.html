@@ -4,66 +4,68 @@
 
 
 {% block msg %}
-  {% if messages %}
-  {% for mg in messages %}
-  <div class="pt-5"></div>
-  <div class="pt-5"></div>
+    {% if messages %}
+        {% for mg in messages %}
+            <div class="pt-5"></div>
+            <div class="pt-5"></div>
 
-  <div {% if mg.tags %} class="alert alert-{{mg.tags}} alert-dismissible fade show" role ="alert" {% endif %}><strong>{{mg}}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
-  </div>
-  {% endfor %}
-  {% endif %}
+            <div {% if mg.tags %} class="alert alert-{{ mg.tags }} alert-dismissible fade show"
+                                  role="alert" {% endif %}><strong>{{ mg }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock msg %}
 
 
 
 {% block content %}
 
-<div class="col-14 container">
-  <h1 class="text-center text-white">
-    Бот
-  </h1>
+    <div class="col-14 container">
+        <h1 class="text-center text-white">
+            Бот
+        </h1>
 
-  <div class="container">
-    <div class="row mt-5">
-      <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
-    <div class="form-group">
-<form method="post">
-    {% csrf_token %}
+        <div class="container">
+            <div class="row mt-5">
+                <div class="shadow col-lg-10  p-5 text-white rounded-4 mx-auto text-center">
+                    <div class="form-group">
+                        <form method="post">
+                            {% csrf_token %}
 
-    {% for f in form %}
-        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-<button type="submit" class="btn btn btn-secondary btn-lg" >Сохранить изменения</button>
-        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger btn-lg">Удалить бота</a>
+                            {% for f in form %}
+                                <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}
+                                </p>
+                                <div class="form-error">{{ f.errors }}</div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn btn-secondary btn-lg">Сохранить изменения</button>
+                            <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger btn-lg">Удалить бота</a>
 
-{#<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить бота</button>#}
-{#<!-- Модальное окно для подтверждения удаления -->#}
-{#<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
-{#  <div class="modal-dialog" role="document">#}
-{#    <div class="modal-content">#}
-{#      <div class="modal-header">#}
-{#        <h5 class="modal-title" id="deleteModalLabel">Удаление объекта</h5>#}
-{#        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#          <span aria-hidden="true">&times;</span>#}
-{#        </button>#}
-{#      </div>#}
-{#      <div class="modal-body">#}
-{#        <p>Вы уверены, что хотите удалить объект?</p>#}
-{#      </div>#}
-{#      <div class="modal-footer">#}
-{#        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>#}
-{#        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger">Удалить бота</a>#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
+                            {#<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить бота</button>#}
+                            {#<!-- Модальное окно для подтверждения удаления -->#}
+                            {#<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
+                            {#  <div class="modal-dialog" role="document">#}
+                            {#    <div class="modal-content">#}
+                            {#      <div class="modal-header">#}
+                            {#        <h5 class="modal-title" id="deleteModalLabel">Удаление объекта</h5>#}
+                            {#        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+                            {#          <span aria-hidden="true">&times;</span>#}
+                            {#        </button>#}
+                            {#      </div>#}
+                            {#      <div class="modal-body">#}
+                            {#        <p>Вы уверены, что хотите удалить объект?</p>#}
+                            {#      </div>#}
+                            {#      <div class="modal-footer">#}
+                            {#        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>#}
+                            {#        <a href="{% url 'bot_delete' bot.id %}" class="btn btn-danger">Удалить бота</a>#}
+                            {#      </div>#}
+                            {#    </div>#}
+                            {#  </div>#}
+                            {#</div>#}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
