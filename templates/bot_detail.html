@@ -267,6 +267,7 @@
                                         </tbody>
 
                                     </table>
+                                <a href="{% url 'clear_transactions' bot.id %}" class="btn btn-danger">Очистить транзакции</a>
                                 {% else %}
                                     <h4 class="text-white text-center my-5"> Бот ещё не торговал :c </h4>
                                 {% endif %}
@@ -276,6 +277,7 @@
                                     $('#example').DataTable();
                                 });
                             </script>
+
                         </div>
                     </div>
                 </div>

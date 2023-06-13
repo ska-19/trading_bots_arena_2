@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template.loader import render_to_string
 from bot.service.bot_service import BotService
+from django.shortcuts import redirect
 
 
 class RegisterBot(CreateView):
@@ -73,6 +74,12 @@ class BotDetailView(PermissionRequiredMixin, DetailView):
         else:
             return False
 
+def clear_transactions(request, pk):
+    bot_service = BotService()
+    bot_service.reset_bot(bot_id=pk)
+    bot = Bot.objects.get(pk=pk)
+    Transaction.objects.filter(bot=bot).delete()
+    return redirect('bot_detail', pk=pk)
 
 class AllBotListView(ListView):
     model = Bot

@@ -74,6 +74,18 @@ class BotService:
     def coin_ticker(self, token_id):
         return self.parser.get_coin_ticker(token_id)
 
+    def reset_bot(self, bot_id):
+        bot = Bot.objects.get(id=bot_id)
+        bot.balance = bot.base_balance
+        bot.amount_BNBBUSD = 0
+        bot.amount_BTCBUSD = 0
+        bot.amount_ETHBUSD = 0
+        bot.amount_LTCBUSD = 0
+        bot.amount_TRXBUSD = 0
+        bot.amount_XRPBUSD = 0
+        bot.save()
+        return bot
+
     def get_statistic_by_bot(self, bot_id):
         estate = 0.0
         bot = Bot.objects.get(id=bot_id)
