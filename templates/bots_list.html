@@ -29,7 +29,7 @@
 
         <div class="container">
             <div class="row mt-10">
-                <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto">
+                <div class="shadow col-lg-10 p-5 text-white rounded-4 mx-auto text-center">
                     <title> Bots</title>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,6 +79,19 @@
                             </table>
                         {% else %}
                             <h4 class="text-white text-center my-5"> У вас пока нет ботов :c </h4>
+                            {% if user.is_authenticated %}
+                                <a href="/bot/add" class="btn btn-warning text-center"> Добавить бота </a>
+                            {% else %}
+                                <p class="text-secondary text-center">Для того, чтобы начать пользоваться нашим
+                                    сервисом, необходимо
+                                    зарегистрироваться или войти в
+                                    свой
+                                    аккаунт.</p>
+                                <a class="btn btn-warning text-center" href="/user/reg"> Зарегистрироваться </a>
+                                <a class="btn btn-warning text-center" href="/user/login"> Войти </a>
+                            {% endif %}
+
+
                         {% endif %}
                     </div>
                     <script>
