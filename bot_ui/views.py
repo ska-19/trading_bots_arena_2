@@ -8,9 +8,11 @@ from django.views.generic import CreateView, DetailView, ListView, DeleteView, U
 from .forms import *
 from django.shortcuts import render
 from bot.models import Bot, Transaction
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template.loader import render_to_string
 from bot.service.bot_service import BotService
+from django.shortcuts import redirect
 
 
 class RegisterBot(CreateView):
@@ -73,13 +75,25 @@ class BotDetailView(PermissionRequiredMixin, DetailView):
             return False
 
 
+def clear_transactions(request, pk):
+    bot_service = BotService()
+    bot_service.reset_bot(bot_id=pk)
+    bot = Bot.objects.get(pk=pk)
+    Transaction.objects.filter(bot=bot).delete()
+    return redirect('bot_detail', pk=pk)
+
+
 class AllBotListView(ListView):
     model = Bot
     template_name = 'ranking.html'
     context_object_name = 'bots'
 
     def get_queryset(self):
-        return Bot.objects.filter(is_public=True)
+        bots = Bot.objects.filter(is_public=True)
+        for bot in bots:
+            user = User.objects.get(id=bot.user_id)
+            bot.user_name = user.username
+        return bots
 
 
 class BotDeleteView(PermissionRequiredMixin, DeleteView):

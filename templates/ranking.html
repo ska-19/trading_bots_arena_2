@@ -54,6 +54,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Author</th>
                                     <th scope="col">Balance</th>
                                     <th scope="col">PNL</th>
                                 </tr>
@@ -61,9 +62,13 @@
                                 <tbody>
                                 {% for bots_i in bots %}
                                     <tr>
-
                                         <td>
                                             <li>{{ bots_i.bot_name }}</li>
+                                        </td>
+                                        <td>
+                                        <a class="nav-link" href="{% url 'profile' bots_i.user_id %}">
+                                            <li>{{ bots_i.user_name }}</li>
+                                        </a>
                                         </td>
                                         <td>{{ bots_i.balance|add_decimal:2 }}</td>
                                         <td>{{ bots_i.balance|percent_of_number:bots_i.base_balance|add_decimal:2|sub:100 }}%</td>
