@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DetailView, ListView, DeleteView, U
 from .forms import *
 from django.shortcuts import render
 from bot.models import Bot, Transaction
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template.loader import render_to_string
 from bot.service.bot_service import BotService
@@ -79,7 +80,11 @@ class AllBotListView(ListView):
     context_object_name = 'bots'
 
     def get_queryset(self):
-        return Bot.objects.filter(is_public=True)
+        bots = Bot.objects.filter(is_public=True)
+        for bot in bots:
+            user = User.objects.get(id=bot.user_id)
+            bot.user_name = user.username
+        return bots
 
 
 class BotDeleteView(PermissionRequiredMixin, DeleteView):
